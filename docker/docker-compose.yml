@@ -1,15 +1,15 @@
 version: '3.4'
 services:
 #  Optional
-#  dynext_test-share:
+#  dynext-share:
 #    image: ${docker.share.image}:${alfresco.share.version}
 #    environment:
-#      REPO_HOST: dynext_test-acs
+#      REPO_HOST: dynext-acs
 #      REPO_PORT: 8080
 #    ports:
 #      - "${share.port}:8080"
-  dynext_test-acs:
-    image: alfresco-content-services-dynext_test:development
+  dynext-acs:
+    image: alfresco-content-services-dynext:development
     build:
       dockerfile: ./Dockerfile
       context: ../../../target
@@ -19,10 +19,10 @@ services:
       - "${acs.port}:8080"
       - "${acs.debug.port}:8888"
     volumes:
-      - dynext_test-acs-volume:/usr/local/tomcat/alf_data
+      - dynext-acs-volume:/usr/local/tomcat/alf_data
     depends_on:
-      - dynext_test-postgres
-  dynext_test-postgres:
+      - dynext-postgres
+  dynext-postgres:
     image: postgres:9.6
     environment:
       POSTGRES_DB: alfresco
@@ -32,24 +32,24 @@ services:
     ports:
       - "${postgres.port}:5432"
     volumes:
-      - dynext_test-db-volume:/var/lib/postgresql/data
-  dynext_test-ass:
+      - dynext-db-volume:/var/lib/postgresql/data
+  dynext-ass:
     image: alfresco/alfresco-search-services:1.2.0
     environment:
-      SOLR_ALFRESCO_HOST: dynext_test-acs
+      SOLR_ALFRESCO_HOST: dynext-acs
       SOLR_ALFRESCO_PORT: 8080
-      SOLR_SOLR_HOST: dynext_test-ass
+      SOLR_SOLR_HOST: dynext-ass
       SOLR_SOLR_PORT: 8983
       SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
     ports:
       - "8983:8983"
     volumes:
-      - dynext_test-ass-volume:/opt/alfresco-search-services/contentstore
-      - dynext_test-ass-volume:/opt/alfresco-search-services/data
+      - dynext-ass-volume:/opt/alfresco-search-services/contentstore
+      - dynext-ass-volume:/opt/alfresco-search-services/data
 volumes:
-  dynext_test-acs-volume:
+  dynext-acs-volume:
     external: true
-  dynext_test-db-volume:
+  dynext-db-volume:
     external: true
-  dynext_test-ass-volume:
+  dynext-ass-volume:
     external: true

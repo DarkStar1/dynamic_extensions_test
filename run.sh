@@ -9,9 +9,9 @@ else
 fi
 
 start() {
-    docker volume create dynext_test-acs-volume
-    docker volume create dynext_test-db-volume
-    docker volume create dynext_test-ass-volume
+    docker volume create dynext-acs-volume
+    docker volume create dynext-db-volume
+    docker volume create dynext-ass-volume
     docker-compose -f $COMPOSE_FILE_PATH up --build -d
 }
 
@@ -22,9 +22,9 @@ down() {
 }
 
 purge() {
-    docker volume rm -f dynext_test-acs-volume
-    docker volume rm -f dynext_test-db-volume
-    docker volume rm -f dynext_test-ass-volume
+    docker volume rm -f dynext-acs-volume
+    docker volume rm -f dynext-db-volume
+    docker volume rm -f dynext-ass-volume
 }
 
 build() {

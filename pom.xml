@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mypackage</groupId>
-    <artifactId>dynext_test</artifactId>
+    <artifactId>dynext</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>dynext_test Platform/Repository JAR Module</name>
+    <name>dynext Platform/Repository JAR Module</name>
     <description>Platform/Repo JAR Module (to be included in the alfresco.war)</description>
     <packaging>jar</packaging>
 
@@ -30,7 +30,7 @@
 
         <!-- Environment configuration properties -->
         <share.port>8180</share.port>
-        <acs.host>dynext_test-acs</acs.host>
+        <acs.host>dynext-acs</acs.host>
         <acs.port>8080</acs.port>
         <acs.debug.port>8888</acs.debug.port>
         <postgres.port>5555</postgres.port>
@@ -81,6 +81,12 @@
         </dependency>
 
         <!-- Bring in Dynamic extensions amp -->
+        <dependency>
+            <groupId>eu.xenit.alfresco</groupId>
+            <artifactId>alfresco-hotfix-MNT-20557</artifactId>
+            <version>1.0.1</version>
+            <type>amp</type>
+        </dependency>
         <dependency>
             <groupId>eu.xenit</groupId>
             <artifactId>alfresco-dynamic-extensions-repo-${dynamic.extensions.alfresco-version}</artifactId>
