@@ -61,6 +61,14 @@
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
         </dependencySet>
+
+        <dependencySet>
+            <outputDirectory>config/dynamic-extensions/bundles</outputDirectory>
+            <includes>
+                <include>${project.groupId}:${project.artifactId}</include>
+            </includes>
+        </dependencySet>
     </dependencySets>
+
 
 </assembly>

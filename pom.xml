@@ -93,6 +93,19 @@
             <version>${dynamic.extensions.version}</version>
             <type>amp</type>
         </dependency>
+        <dependency>
+            <groupId>eu.xenit.de</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${dynamic.extensions.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.xenit.de</groupId>
+            <artifactId>webscripts</artifactId>
+            <version>${dynamic.extensions.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 
@@ -123,7 +136,7 @@
                     the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
                     module.
                 -->
-            <!--
+            <!-- -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -149,7 +162,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            -->
+
 
             <!-- Filter the test resource files in the AIO parent project, and do property substitutions.
                  We need this config so this is done before the Alfresco Maven Plugin 'run' is executed. -->
@@ -419,39 +432,28 @@
                 </executions>
             </plugin>
 
-            <!-- Hot reloading with JRebel -->
+            <!-- Hot reloading with Dynamic Extensions -->
             <plugin>
-                <groupId>org.zeroturnaround</groupId>
-                <artifactId>jrebel-maven-plugin</artifactId>
-                <version>${jrebel.version}</version>
-                <executions>
-                    <execution>
-                        <id>generate-rebel-xml</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>4.2.0</version>
+                <!-- This option enables custom bundle headers in the <instructions> -->
+                <extensions>true</extensions>
                 <configuration>
-                    <!-- For more information about how to configure JRebel plugin see:
-                         http://manuals.zeroturnaround.com/jrebel/standalone/maven.html#maven-rebel-xml -->
-                    <classpath>
-                        <fallback>all</fallback>
-                        <resources>
-                            <resource>
-                                <directory>${project.build.outputDirectory}</directory>
-                                <directory>${project.build.testOutputDirectory}</directory>
-                            </resource>
-                        </resources>
-                    </classpath>
-
-                    <!--
-                      alwaysGenerate - default is false
-                      If 'false' - rebel.xml is generated if timestamps of pom.xml and the current rebel.xml file are not equal.
-                      If 'true' - rebel.xml will always be generated
-                    -->
-                    <alwaysGenerate>true</alwaysGenerate>
+                    <instructions>
+                        <!--
+                          NOTE: it is necessary for this header to be present
+                          in the manifest for the Bundle to be treated as an Alfresco extension.
+                          This header MUST have the value 'true'.
+                        -->
+                        <Alfresco-Dynamic-Extension>true</Alfresco-Dynamic-Extension>
+                        <Alfresco-Spring-Configuration>com.mypackage</Alfresco-Spring-Configuration>
+                        <DynamicImport-Package>*</DynamicImport-Package>
+                        <!-- Optionally, the Package headers can be customized
+                        <Import-Package></Import-Package>
+                        <Export-Package></Export-Package>
+                         -->
+                    </instructions>
                 </configuration>
             </plugin>
         </plugins>
